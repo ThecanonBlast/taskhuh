@@ -1,0 +1,11 @@
+# Entorno virtual
+venv/
+
+# Archivos temporales
+__pycache__/
+*.pyc
+
+# Datos del proyecto
+data/*.csv
+data/*.json
+
