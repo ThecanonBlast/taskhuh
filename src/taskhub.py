@@ -2,6 +2,7 @@ import argparse #para leer argumentos desde la terminal
 from agregar import agregar_tareas
 from listar import listar_tareas
 from completar import completar_tarea
+from eliminar import eliminar_tarea
 
 def main():
     #crea el objeto parser que lee los inputs de la terminal
@@ -16,11 +17,17 @@ def main():
     agregar_parser.add_argument("--tiempo", required=True, type=int, help="tiempo estimado de la tarea en minutos")
     agregar_parser.add_argument("--proyecto", default="General", help="Nombre del proyecto (opcional)")
 
+    #listar
     listar_parser = subparsers.add_parser("listar", help="Listar todos los comandos")
     listar_parser.add_argument("--proyecto", help="Filtrar por nombre del proyecto(Opcional)")
 
+    #completar
     completar_parser = subparsers.add_parser("completar", help="marcar como completada")
     completar_parser.add_argument("--indice", required=True, type=int, help="indice de la tarea a completar")
+
+    #eliminar
+    eliminar_parser = subparsers.add_parser("eliminar", help="Eliminar una tarea por su indice")
+    eliminar_parser.add_argument("--indice", required=True, type=int, help="indice de la tarea a eliminar")
 
     args = parser.parse_args() #analiza lo escrito en la terminal
     #verifica que el comando haya sido agregar
@@ -32,6 +39,9 @@ def main():
 
     if args.comando == "completar":
         completar_tarea(args.indice)
+    
+    if args.comando == "eliminar":
+        eliminar_tarea(args.indice)
 
     #ejemplo en la consola:
     #python src/taskhub.py agregar --nombre "Enviar informe" --tiempo 20 --proyecto "Contabilidad"
