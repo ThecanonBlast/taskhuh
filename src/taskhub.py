@@ -3,6 +3,8 @@ from agregar import agregar_tareas
 from listar import listar_tareas
 from completar import completar_tarea
 from eliminar import eliminar_tarea
+from editar import editar_tarea
+
 
 def main():
     #crea el objeto parser que lee los inputs de la terminal
@@ -29,6 +31,13 @@ def main():
     eliminar_parser = subparsers.add_parser("eliminar", help="Eliminar una tarea por su indice")
     eliminar_parser.add_argument("--indice", required=True, type=int, help="indice de la tarea a eliminar")
 
+    #Editar
+    editar_parser = subparsers.add_parser("editar", help="Editar una tarea existente")
+    editar_parser.add_argument("--indice", required=True, type=int, help="Índice de la tarea a editar")
+    editar_parser.add_argument("--nombre", help="Nuevo nombre de la tarea")
+    editar_parser.add_argument("--tiempo", type=int, help="Nuevo tiempo estimado (minutos)")    
+    editar_parser.add_argument("--proyecto", help="Nuevo nombre del proyecto")
+
     args = parser.parse_args() #analiza lo escrito en la terminal
     #verifica que el comando haya sido agregar
     if args.comando == "agregar":
@@ -42,6 +51,8 @@ def main():
     
     if args.comando == "eliminar":
         eliminar_tarea(args.indice)
+    elif args.comando == "editar":
+        editar_tarea(args.indice, args.nombre, args.tiempo, args.proyecto)
 
     #ejemplo en la consola:
     #python src/taskhub.py agregar --nombre "Enviar informe" --tiempo 20 --proyecto "Contabilidad"
